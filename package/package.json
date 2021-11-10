@@ -1,12 +1,12 @@
 {
   "name": "drop-down-menu",
   "version": "1.0.0",
-  "description": "",
+  "description": "DropDown Menu and first attempt to publish package on NPM",
   "main": "script.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Celdama",
   "license": "ISC",
   "devDependencies": {
     "eslint": "^8.2.0",
