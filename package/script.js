@@ -32,3 +32,5 @@ const dropDown = (() => {
 })();
 
 dropDown.toggleListener();
+
+module.exports = dropDown;
