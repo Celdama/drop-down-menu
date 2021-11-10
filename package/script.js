@@ -31,6 +31,8 @@ const dropDown = (() => {
   };
 })();
 
-dropDown.toggleListener();
+window.onload = () => {
+  dropDown.toggleListener()
+  console.log('on load');
+}
 
-module.exports = dropDown;
