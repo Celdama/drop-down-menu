@@ -2,11 +2,9 @@ const dropDown = (() => {
   const dropDownBtn = Array.from(document.querySelectorAll('.drop-down-btn-wrapper'));
   const dropDownMenu = Array.from(document.querySelectorAll('.drop-down-list'));
   const dropDownIcon = Array.from(document.querySelectorAll('.bi-chevron-right'));
+  const dropDownItems = Array.from(document.querySelectorAll('.drop-item'));
 
-  const toggleDropDownMenu = (element, target) => {
-    element.classList.toggle('visible');
-    element.classList.toggle('not-visible');
-
+  const rotateChevron = (target) => {
     dropDownIcon.forEach((icon) => {
       if (target === icon.parentElement.offsetParent) {
         icon.classList.toggle('chevron-rotate');
@@ -14,25 +12,42 @@ const dropDown = (() => {
     });
   };
 
-  const toggleListener = () => {
-    dropDownBtn.forEach((btn) => {
-      btn.addEventListener('click', (e) => {
-        dropDownMenu.forEach((item) => {
-          if (item.offsetParent === e.target.offsetParent) {
-            toggleDropDownMenu(item, e.target.offsetParent);
-          }
-        });
+  const droppedMenu = (target = null) => {
+    dropDownMenu.forEach((item) => {
+      if (item.offsetParent === target) {
+        item.classList.toggle('visible');
+        item.classList.toggle('not-visible');
+        rotateChevron(target);
+      }
+    });
+  };
+
+  const closeDropDownMenuWithDropItem = () => {
+    dropDownItems.forEach((item) => {
+      item.addEventListener('click', () => {
+        const visi = document.querySelector('.visible');
+
+        visi.classList.toggle('visible');
+        visi.classList.toggle('not-visible');
+        rotateChevron(visi.offsetParent);
       });
     });
   };
 
+  const toggleDropMenuWith = () => {
+    dropDownBtn.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        droppedMenu(e.target.offsetParent);
+      });
+    });
+    closeDropDownMenuWithDropItem();
+  };
+
   return {
-    toggleListener,
+    toggleDropMenuWith,
   };
 })();
 
 window.onload = () => {
-  dropDown.toggleListener()
-  console.log('on load');
-}
-
+  dropDown.toggleDropMenuWith();
+};
