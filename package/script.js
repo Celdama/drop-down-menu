@@ -12,12 +12,28 @@ const dropDown = (() => {
     });
   };
 
+  const toggleVisibleClass = (element) => {
+    element.classList.toggle('visible');
+    element.classList.toggle('not-visible');
+    rotateChevron(element.offsetParent);
+  };
+
   const droppedMenu = (target = null) => {
     dropDownMenu.forEach((item) => {
       if (item.offsetParent === target) {
-        item.classList.toggle('visible');
-        item.classList.toggle('not-visible');
-        rotateChevron(target);
+        toggleVisibleClass(item);
+      }
+    });
+  };
+
+  const checkClickOutsideDroppedMenu = () => {
+    window.addEventListener('click', (e) => {
+      const elementToCheck = e.target.offsetParent.className;
+      if (!elementToCheck.includes('drop-down-list') && !elementToCheck.includes('drop-down-section')) {
+        const visibleElement = document.querySelector('.visible');
+        if (visibleElement) {
+          toggleVisibleClass(visibleElement);
+        }
       }
     });
   };
@@ -25,29 +41,27 @@ const dropDown = (() => {
   const closeDropDownMenuWithDropItem = () => {
     dropDownItems.forEach((item) => {
       item.addEventListener('click', () => {
-        const visi = document.querySelector('.visible');
-
-        visi.classList.toggle('visible');
-        visi.classList.toggle('not-visible');
-        rotateChevron(visi.offsetParent);
+        const visibleElement = document.querySelector('.visible');
+        toggleVisibleClass(visibleElement);
       });
     });
   };
 
-  const toggleDropMenuWith = () => {
+  const toggleDropMenu = () => {
     dropDownBtn.forEach((btn) => {
       btn.addEventListener('click', (e) => {
         droppedMenu(e.target.offsetParent);
       });
     });
     closeDropDownMenuWithDropItem();
+    checkClickOutsideDroppedMenu();
   };
 
   return {
-    toggleDropMenuWith,
+    toggleDropMenu,
   };
 })();
 
 window.onload = () => {
-  dropDown.toggleDropMenuWith();
+  dropDown.toggleDropMenu();
 };
